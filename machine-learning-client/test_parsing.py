@@ -29,9 +29,26 @@ def test_testing():
     """
     s = "Testing, testing. 1, 2, 3. 1, 2, 3.\
         Fat Fox, Brown cat. The car is fast."
-    expect = ["Testing", "testing", "1", "2", "3",\
-        "1", "2", "3", "Fat", "Fox", "Brown", "cat", "The", "car", "is", "fast"]
+    expect = [
+        "Testing",
+        "testing", 
+        "1",
+        "2",
+        "3",
+        "1",
+        "2",
+        "3",
+        "Fat",
+        "Fox",
+        "Brown",
+        "cat",
+        "The",
+        "car",
+        "is",
+        "fast"
+    ]
     assert parse_text(s) == expect
+
 
 def test_arbitrary():
     """
