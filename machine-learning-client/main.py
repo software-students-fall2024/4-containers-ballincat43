@@ -28,11 +28,11 @@ def vocab_diversity(data: str) -> tuple:
             di[w] += 1
         else:
             di[w] = 1
-            unique += 1 # could also count len(keys) but for performace
+            unique += 1  # could also count len(keys) but for performace
     if total == 0:
-        freq = 1 # if no words technically all unique
+        freq = 1  # if no words technically all unique
     else:
-        freq: float =  unique / total
+        freq: float = unique / total
     return most_common_dict(di), round(freq, 2)
 
 
@@ -47,7 +47,7 @@ def most_common_dict(word_freq: dict, every: bool = False):
     if every:
         ms = []
     else:
-        ms = "" # max string
+        ms = ""  # max string
     for k in sorted(word_freq.keys()):
         v = word_freq.get(k)
         if v > m:
