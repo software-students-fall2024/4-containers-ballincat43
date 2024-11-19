@@ -56,4 +56,4 @@ def most_common_dict(word_freq: dict, every: bool = False):
                 ms.append(k)
             else:
                 ms = k
-    return ms    
+    return ms
