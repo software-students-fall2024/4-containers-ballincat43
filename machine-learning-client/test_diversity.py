@@ -21,7 +21,7 @@ def test_repeat():
     s = "apple apple apple apple apple"
     m, f = vocab_diversity(s)
     assert f == .2
-    assert m == "apple" 
+    assert m == "apple"
 
 def test_none():
     '''
@@ -29,7 +29,7 @@ def test_none():
     '''
     s = ""
     m, f = vocab_diversity(s)
-    assert f == 1 
+    assert f == 1
     assert m == ""
 
 def test_reg():
