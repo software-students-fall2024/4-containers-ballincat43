@@ -2,6 +2,7 @@
 This file contains the functions to perform some
 analysis on data recieved.
 """
+import re
 
 # starting some functions:
 
@@ -15,13 +16,13 @@ def vocab_diversity(data: str) -> tuple:
     the string is empty.
     """
     # split into words
-    words = data.split()
+    words = parse_text(data)
     di = {}
     total: int = 0
     unique: int = 0
     for w in words:
         w = w.lower()
-        if not str.isalpha(w):
+        if not (str.isalpha(w) or str.isdigit(w)) or len(w) == 0:
             continue
         total += 1
         if w in di:
@@ -57,3 +58,12 @@ def most_common_dict(word_freq: dict, every: bool = False):
             else:
                 ms = k
     return ms
+
+
+def parse_text(text: str) -> list:
+    """
+    This function takes in a string and parses it for
+    numbers and alphabetic characters.
+    """
+    text_list = re.split(r"[^0-9A-Za-z]", text)
+    return [word for word in text_list if word != ""]
