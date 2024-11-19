@@ -1,9 +1,20 @@
+'''
+This file contains the functions to perform some
+analysis on data recieved.
+'''
+
 #starting some functions:
 
 
 
-
 def vocab_diversity(data: str) -> tuple:
+    '''
+    This function takes in a string and calculates the frequency of 
+    unique words to total words as well as the most common word. (Words must be
+    alphabetic). It returns a tuple of length 2, with the first item being the
+    most common word in the given string and the second being the frequency. If
+    the string is empty 
+    '''
     #split into words
     words = data.split()
     di = {}
