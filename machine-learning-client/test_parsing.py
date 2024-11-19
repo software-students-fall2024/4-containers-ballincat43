@@ -31,7 +31,7 @@ def test_testing():
         Fat Fox, Brown cat. The car is fast."
     expect = [
         "Testing",
-        "testing", 
+        "testing",
         "1",
         "2",
         "3",
@@ -45,7 +45,7 @@ def test_testing():
         "The",
         "car",
         "is",
-        "fast"
+        "fast",
     ]
     assert parse_text(s) == expect
 
