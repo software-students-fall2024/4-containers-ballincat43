@@ -27,8 +27,10 @@ def test_testing():
     """
     This will test a sample audio recording.
     """
-    s = "Testing, testing. 1, 2, 3. 1, 2, 3. Fat Fox, Brown cat. The car is fast."
-    expect = ["Testing", "testing", "1", "2", "3", "1", "2", "3", "Fat", "Fox", "Brown", "cat", "The", "car", "is", "fast"]
+    s = "Testing, testing. 1, 2, 3. 1, 2, 3.\
+        Fat Fox, Brown cat. The car is fast."
+    expect = ["Testing", "testing", "1", "2", "3",\
+        "1", "2", "3", "Fat", "Fox", "Brown", "cat", "The", "car", "is", "fast"]
     assert parse_text(s) == expect
 
 def test_arbitrary():
