@@ -6,6 +6,6 @@ COPY . /app
 
 RUN pipenv install
 
-EXPOSE 101
+EXPOSE 1000
 
 CMD ["python", "functions.py"]
