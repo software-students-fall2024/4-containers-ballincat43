@@ -1,7 +1,7 @@
 """
 This file contains tests for the vocab_diversity() function.
 """
-from main import vocab_diversity
+from functions import vocab_diversity
 
 
 def test_unique():

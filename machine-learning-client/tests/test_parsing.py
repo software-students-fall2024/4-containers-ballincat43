@@ -1,7 +1,7 @@
 """
 This file contains tests for the parse_text() function.
 """
-from main import parse_text
+from functions import parse_text
 
 
 def test_none():
