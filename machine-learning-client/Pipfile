@@ -5,7 +5,9 @@ name = "pypi"
 
 [packages]
 pylint = "*"
+pytest = "*"
 black = "*"
+flask = "*"
 
 [dev-packages]
 
