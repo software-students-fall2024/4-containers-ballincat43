@@ -84,7 +84,7 @@ def create_account():
     return render_template("create_account.html", error=error)
 
 
-@app.route("/logout")
+@app.route("/logout", methods = ["POST"])
 def logout():
     """handles user logout"""
     logout_user()
@@ -111,3 +111,11 @@ def show_home(username):
     """show logged-in user's homepage"""
 
     return render_template("user_home.html", username=username)
+
+
+@app.route("/<username>/stats")
+@login_required
+def stats(username):
+    """show the user's statistics page"""
+
+    return render_template("stats.html", username=username)
