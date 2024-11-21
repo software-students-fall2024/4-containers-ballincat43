@@ -6,6 +6,10 @@ from flask_login import FlaskLoginClient
 from app import app, User
 
 
+app.secret_key = "tripledoubleholymoly"
+app.test_client_class = FlaskLoginClient
+
+
 def test_index():
     """tests index redirects"""
     with app.test_client() as client:
