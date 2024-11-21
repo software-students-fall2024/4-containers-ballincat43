@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 1000
 
-CMD ["python", "client.py"]
+CMD ["python", "-m", "flask", "run", "--port=1000"]

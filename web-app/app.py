@@ -6,6 +6,7 @@ audio recording, and viewing statistics
 from flask import Flask, render_template, request, redirect, url_for
 import flask_login
 from flask_login import login_user, login_required, logout_user
+import requests
 
 # instantiate flask app, create key
 app = Flask(__name__)
@@ -121,5 +122,17 @@ def stats(username):
     return render_template("stats.html", username=username)
 
 
+@app.route("/listen", methods=["POST"])
+def listen():
+    """
+    Connect to the machine learning client to process audio.
+    """
+    print("WENT IN TO FUNCTION")
+    audio = request.form.get("afile")
+    response = requests.post('http://machine:1000/listen', data=audio)
+    return response
+
+
 if __name__ == "__main__":
+    print("Starting")
     app.run(host="127.0.0.1", port=5000)

@@ -29,7 +29,6 @@ services:
       - MONGO_PASS=${MONGO_PASSWORD}
     volumes:
       - database:/data/db
-    command: mongosh Data --host ${MONGO_HOST} -u ${MONGO_USERNAME} -p ${MONGO_PASSWORD}
 
 volumes:
   database:

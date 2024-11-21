@@ -8,6 +8,7 @@ pylint = "*"
 black = "*"
 flask = "*"
 flask-login = "*"
+requests="*"
 
 [dev-packages]
 
