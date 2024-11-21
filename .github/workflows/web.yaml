@@ -12,13 +12,13 @@ jobs:
         python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
+      - name: Enter Directory
+        run: |
+          cd web-app
       - name: Install Python
         uses: kojoru/prepare-pipenv@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Enter Directory
-        run: |
-          cd web-app
       - name: Run the tests
         run: |
           pipenv install pytest
