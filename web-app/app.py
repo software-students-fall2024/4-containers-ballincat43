@@ -111,3 +111,7 @@ def show_home(username):
     """show logged-in user's homepage"""
 
     return render_template("user_home.html", username=username)
+
+
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=5000)

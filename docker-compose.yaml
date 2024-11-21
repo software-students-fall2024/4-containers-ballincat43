@@ -2,20 +2,19 @@ services:
   web:
     build: ./web-app
     ports:
-      - 1001:1001
+      - 5000:5000
     environment:
-      DB_HOST = mongodb://db/data
+      - DB_HOST = ${MONGO_HOST}
     depends_on:
       - machine
       - db
-    command: npm start
 
   machine:
     build: ./machine-learning-client
     ports:
       - 1000:1000
     environment:
-      DB_HOST = mongodb://db/data
+      - DB_HOST = ${MONGO_HOST}
     depends_on:
       - db
 
@@ -23,8 +22,11 @@ services:
     image: mongo:4.0-xenial
     ports:
       - 27017:27017
+    environment:
+      - MONGO_USER=${MONGO_USERNAME}
+      - MONGO_PASS=${MONGO_PASSWORD}
     volumes:
-      - ./data:/data/db
+      - database:/data/db
 
 volumes:
-  data:
+  database:

@@ -8,6 +8,7 @@ pylint = "*"
 pytest = "*"
 black = "*"
 flask = "*"
+pipenv = "*"
 
 [dev-packages]
 

@@ -2,9 +2,12 @@ FROM python:3.10
 
 WORKDIR /app
 
-COPY . /app
+COPY Pipfile Pipfile.lock ./
 
-RUN pipenv install
+RUN python -m pip install pipenv
+RUN pipenv install --system --deploy
+
+COPY . .
 
 EXPOSE 1000
 
