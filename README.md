@@ -1,4 +1,4 @@
-![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg) 
+![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg) ![Machine-Learning-Client Tests](https://github.com/software-students-fall2024/4-containers-ballincat43/actions/workflows/machine.yaml/badge.svg) ![Web-App Tests](https://github.com/software-students-fall2024/4-containers-ballincat43/actions/workflows/web.yaml/badges.svg)
 
 # Ballin Speech Analyzer
 
