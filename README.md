@@ -12,8 +12,6 @@ Our project is a speech analyzer that recieves microphone or audio file input, t
 - David Jimenez, [Github](https://github.com/drj8812)
 - Sean Lee, [Github](https://github.com/jseanlee)
 
-- instructions for how to set up any environment variables and import any starter data into the database, as necessary, for the system to operate correctly when run.
-
 ## Configuration and How to Run Application
 
 ### Setting up 
