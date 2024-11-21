@@ -84,7 +84,7 @@ def create_account():
     return render_template("create_account.html", error=error)
 
 
-@app.route("/logout", methods = ["POST"])
+@app.route("/logout", methods=["POST"])
 def logout():
     """handles user logout"""
     logout_user()
