@@ -9,6 +9,7 @@ pytest = "*"
 black = "*"
 flask = "*"
 pipenv = "*"
+pymongo = "*"
 
 [dev-packages]
 

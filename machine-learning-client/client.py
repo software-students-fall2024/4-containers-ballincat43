@@ -4,9 +4,20 @@ the web-app container.
 """
 
 from flask import Flask
+from pymongo import MongoClient
+import os
 
 
 app = Flask(__name__)
+# mongo_host = os.getenv("MONGO_HOST")
+# db_name = os.getenv("DB_NAME")
+
+# mongo_client = MongoClient(mongo_host, port=27017)
+
+# db = mongo_client[db_name]
+# db.SpeechText.insert_one({
+#     "text": "GOOD MORNING"
+# })
 
 
 @app.route("/listen", methods=["POST"])
