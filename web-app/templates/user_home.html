@@ -15,7 +15,7 @@
 
     <div class="button-container">
         <button class="action-btn", id="srecord">Start Recording</button>
-        <form id = "audioInput" action="{{url_for('listen')}}" method = "Post">
+        <form id = "audioInput">
             <input type="file" id="afile" name="afile" hidden>
             <button id = "done" type = "submit">Stop Recording</button>
         </form>
@@ -44,6 +44,15 @@
                 const dt = new DataTransfer();
                 dt.items.add(returnfile);
                 afile.files = dt.files;
+                fetch('/listen', {
+                    method: 'POST',
+                    body: aform.files
+                })
+                .then(response => response.json())
+                .then(data => {
+                    common = data.common;
+                    document.getElementById("information").textContent = common;        
+                })
             }
 
             mediarec.start();
@@ -51,17 +60,6 @@
 
         done.addEventListener("click", () => {
             mediarec.stop();
-
-            const input = new FormData(aform);
-            fetch('/login', {
-                method: 'POST',
-                body: input
-            })
-            .then(response => response.json())
-            .then(data => {
-                common = data.common;
-                document.getElementById("information").textContent = common;        
-            })
         });
     </script>
 </body>

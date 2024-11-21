@@ -128,11 +128,16 @@ def listen():
     Connect to the machine learning client to process audio.
     """
     print("WENT IN TO FUNCTION")
-    audio = request.form.get("afile")
-    response = requests.post('http://machine:1000/listen', data=audio)
-    return response
+    audio = request.files["afile"]
+
+    audio.save("audiofiles/temp.wav")
+    file = open("audiofiles/temp.wav", 'r')
+
+    response = requests.post('http://machine:1000/listen', files={"afile": file})
+    response.raise_for_status()
+    return response.json()
 
 
 if __name__ == "__main__":
     print("Starting")
-    app.run(host="127.0.0.1", port=5000)
+    app.run(host="0.0.0.0", port=5000)

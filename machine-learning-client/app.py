@@ -26,17 +26,19 @@ def listen():
     """
     This function will recieve input from user's microphone.
     """
-    audio = request.data
+    audio = request.files["afile"]
     
     #text = transcribe(audio)
-    rec = sprc.Recognizer()
-    a = rec.record(sprc.AudioFile(audio))
-    text = rec.recognize_google_cloud(a)
+    # rec = sprc.Recognizer()
+    # a = rec.record(sprc.AudioFile(audio))
+    # text = rec.recognize_google_cloud(a)
+    text = "apple apple apple apple"
     
     common, freq = vocab_diversity(text)
     percent = f'{(freq*100)}%'
+    result = ""
 
-    return jsonify({"common": common, "freq" : percent})
+    return jsonify({"common": str(common), "freq": str(percent)}), 200
 
 
 if __name__ == "__main__":
@@ -49,4 +51,4 @@ if __name__ == "__main__":
     #     "text": "GOOD MORNING"
     # }))
 
-    app.run(host="127.0.0.1", port=1000)
+    app.run(host="0.0.0.0", port=1000)

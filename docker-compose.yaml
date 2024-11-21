@@ -8,6 +8,8 @@ services:
     depends_on:
       - machine
       - db
+    volumes:
+      - ./files:/app/audiofiles
 
   machine:
     build: ./machine-learning-client
@@ -17,6 +19,8 @@ services:
       - DB_HOST = ${MONGO_HOST}
     depends_on:
       - db
+    volumes:
+      - ./files:/app/audiofiles
 
   db:
     image: mongo:4.0-xenial
@@ -32,3 +36,7 @@ services:
 
 volumes:
   database:
+
+networks:
+  default:
+    driver: bridge
