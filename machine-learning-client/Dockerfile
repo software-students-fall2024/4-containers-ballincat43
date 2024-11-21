@@ -8,4 +8,4 @@ RUN pipenv install
 
 EXPOSE 1000
 
-CMD ["python", "functions.py"]
+CMD ["python", "client.py"]
