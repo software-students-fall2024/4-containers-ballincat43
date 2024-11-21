@@ -1,0 +1,68 @@
+/* general styles for application */
+body {
+    font-family: Helvetica, sans-serif;
+    font-size: 80%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: gray;
+}
+
+/* header block */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    box-sizing:border-box;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ccc;
+}
+
+header h2 {
+    margin: 0;
+}
+
+/* button styles */
+.logout-btn {
+    background-color: #48fd;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu-btn {
+    background-color: #48fd;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* container to store list of buttons */
+.button-container {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 10px 15px;
+    font-size: 50px;
+    background-color:aliceblue;
+    color: black;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+    cursor: pointer;
+}
