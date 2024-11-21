@@ -2,7 +2,7 @@ name: Web App Tests
 on:
   pull_request:
     types: [opened, closed]
-    branches: [main, master, pipfile-experiment]
+    branches: [main, master]
 jobs:
   build_test:
     runs-on: ubuntu-latest
@@ -21,6 +21,6 @@ jobs:
           cd web-app
       - name: Run the tests
         run: |
-          pipenv install pytest
+          pipenv install
           pipenv --venv
           pipenv run python -m pytest
