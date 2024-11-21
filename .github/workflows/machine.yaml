@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 6
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
@@ -21,6 +21,6 @@ jobs:
           cd machine-learning-client
       - name: Run the tests
         run: |
-          pipenv install
+          pipenv install pytest
           pipenv --venv
           pipenv run python -m pytest
