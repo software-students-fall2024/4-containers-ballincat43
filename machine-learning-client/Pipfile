@@ -10,6 +10,7 @@ black = "*"
 flask = "*"
 pipenv = "*"
 pymongo = "*"
+SpeechRecognition = "*"
 
 [dev-packages]
 

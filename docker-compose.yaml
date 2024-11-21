@@ -22,11 +22,14 @@ services:
     image: mongo:4.0-xenial
     ports:
       - 27017:27017
+    env_file:
+      - .env
     environment:
       - MONGO_USER=${MONGO_USERNAME}
       - MONGO_PASS=${MONGO_PASSWORD}
     volumes:
       - database:/data/db
+    command: mongosh Data --host ${MONGO_HOST} -u ${MONGO_USERNAME} -p ${MONGO_PASSWORD}
 
 volumes:
   database:
