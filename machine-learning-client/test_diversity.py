@@ -1,6 +1,7 @@
 """
 This file contains tests for the vocab_diversity() function.
 """
+
 from functions import vocab_diversity
 
 

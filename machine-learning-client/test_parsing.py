@@ -1,6 +1,7 @@
 """
 This file contains tests for the parse_text() function.
 """
+
 from functions import parse_text
 
 

@@ -2,6 +2,7 @@
 This file contains the functions to perform some
 analysis on data recieved.
 """
+
 import re
 
 # starting some functions:
