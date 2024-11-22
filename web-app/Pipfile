@@ -9,6 +9,8 @@ black = "*"
 flask = "*"
 flask-login = "*"
 requests="*"
+pytest="*"
+coverage = "*"
 
 [dev-packages]
 
