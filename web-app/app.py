@@ -180,7 +180,7 @@ def listen(username):
                 most = "error"
 
         return jsonify({"most": most, "percent": percent})
-    
+
     return render_template(
         "results.html", username=username, most=most, percent=percent
     )
