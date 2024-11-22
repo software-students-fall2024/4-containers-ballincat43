@@ -158,7 +158,7 @@ def listen(username):
     return redirect(url_for("results", username=username, most=most, percent=percent))
 
 
-@app.route('/<username>/<most>:<percent>', methods=["GET", "POST"])
+@app.route("/<username>/<most>:<percent>", methods=["GET", "POST"])
 @login_required
 def results(username, most, percent):
     """Post results"""
