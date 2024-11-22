@@ -2,10 +2,13 @@ FROM python:3.10
 
 WORKDIR /app
 
-COPY . /app
+COPY Pipfile Pipfile.lock ./
 
-RUN pipenv install
+RUN python -m pip install pipenv
+RUN pipenv install --system --deploy
 
-EXPOSE 1001
+COPY . .
 
-CMD ["python", "app.py"]
+EXPOSE 5000
+
+CMD ["python", "-m", "flask", "run","--host=0.0.0.0"]

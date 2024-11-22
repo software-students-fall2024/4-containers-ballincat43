@@ -6,6 +6,7 @@ audio recording, and viewing statistics
 from flask import Flask, render_template, request, redirect, url_for
 import flask_login
 from flask_login import login_user, login_required, logout_user
+import requests
 
 # instantiate flask app, create key
 app = Flask(__name__)
@@ -39,6 +40,7 @@ def user_loader(username):
 def login():
     """handles login functionality"""
     error = None
+    print("HELLO")
 
     if request.method == "POST":
         username = request.form.get("username")
@@ -119,3 +121,52 @@ def stats(username):
     """show the user's statistics page"""
 
     return render_template("stats.html", username=username)
+
+
+@app.route("/listen/<username>", methods=["POST"])
+def listen(username):
+    """
+    Connect to the machine learning client to process audio.
+    """
+    print("WENT IN TO FUNCTION")
+    if "afile" not in request.files:
+        return render_template(
+            "user_home.html",
+            username=username,
+            most=str(request.files.keys()),
+            percent="100%",
+        )
+    audio = request.files["afile"]
+    audio.save("audiofiles/temp.wav")
+
+    # audio.save("audiofiles/temp.wav")
+    # file = open("audiofiles/temp.wav", 'r')
+    most = ""
+    percent = ""
+    response = requests.post("http://machine:1000/transcribe", timeout=100000)
+    # need time to process the request
+    if response.status_code == 200:
+        try:
+            with open("audiofiles/temp.csv", "r", encoding="utf-8") as tfile:
+                text = tfile.read().split(",")
+                most = text[0]
+                percent = text[1]
+        except IOError as e:
+            print("ERROR: ", e)
+            most = "error"
+
+    return redirect(url_for("results", username=username, most=most, percent=percent))
+
+
+@app.route("/<username>/<most>:<percent>", methods=["GET", "POST"])
+@login_required
+def results(username, most, percent):
+    """Post results"""
+    return render_template(
+        "user_home.html", username=username, most=most, percent=percent
+    )
+
+
+if __name__ == "__main__":
+    print("Starting")
+    app.run(host="0.0.0.0", port=5000)

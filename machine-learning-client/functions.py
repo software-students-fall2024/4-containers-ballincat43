@@ -35,7 +35,7 @@ def vocab_diversity(data: str) -> tuple:
         freq = 1  # if no words technically all unique
     else:
         freq: float = unique / total
-    return most_common_dict(di), round(freq, 2)
+    return most_common_dict(di), round(freq, 4)
 
 
 def most_common_dict(word_freq: dict, every: bool = False):

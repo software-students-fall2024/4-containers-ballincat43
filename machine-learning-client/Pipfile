@@ -8,6 +8,11 @@ pylint = "*"
 pytest = "*"
 black = "*"
 flask = "*"
+pipenv = "*"
+pymongo = "*"
+SpeechRecognition = "*"
+python-dotenv = "*"
+assemblyai = "*"
 
 [dev-packages]
 

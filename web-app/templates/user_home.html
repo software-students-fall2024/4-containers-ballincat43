@@ -8,17 +8,75 @@
 <body>
     <header>
         <h2>Welcome, {{username}}!</h2>
-        <form action="{{ url_for("logout") }}" method="POST" style="margin: 0;">
+        <form action="{{ url_for('logout') }}" method="POST" style="margin: 0;">
             <button type="submit" class="logout-btn">Logout</button>
         </form>
     </header>
 
     <div class="button-container">
-        <button class="action-btn">Start Recording</button>
+        <button class="action-btn", id="srecord">Start Recording</button>
+        <button class = "action-btn", id = "doneButton">Stop Recording</button>
+        <form id = "audioInput" action = "{{url_for('listen', username=username)}}" method = "POST">
+            <input type="file" id="afile" name="afile" hidden />
+            <button id = "sub" type = "submit">Submit</button>
+        </form>
+        {% if most is not none %}
+            <div id="information">Most Common Word: {{most}}</div>
+            </br>
+            <div>Diversity: {{percent}}</div>
+        {% endif %}
         <button class="action-btn">Upload Audio</button>
-        <form action="{{ url_for("stats", username=username) }}" method="GET" style="margin: 0;">
+        <form action="{{ url_for('stats', username=username) }}" method="GET" style="margin: 0;">
             <button type="submit" class="action-btn">My Stats</button>
         </form>
     </div>
+
+    <script>
+        let mediarec;
+        let audio = [];
+        const recording = document.getElementById("srecord");
+        const doneButton = document.getElementById("doneButton");
+        const afile = document.getElementById("afile");
+        const aform = document.getElementById("audioInput");
+
+        recording.addEventListener("click", async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+            mediarec = new MediaRecorder(stream);
+            mediarec.ondataavailable = e => audio.push(e.data);
+            mediarec.start();
+            mediarec.onstop = e => {
+                const adata = new Blob(audio, {type: "audio/wav"});
+                const returnfile = new File([adata], "afile", {type: "audio/wav"});
+                const dt = new DataTransfer();
+                dt.items.add(returnfile);
+                afile.files = dt.files;
+                const formd = new FormData();
+                formd.append('afile', adata);
+                fetch('/listen/{{username}}', {
+                    method: 'POST',
+                    body: formd
+                })
+                audio = [];
+                // console.log("Sanity check");
+                
+                // fetch('/listen', {
+                //     method: 'POST',
+                //     body: aform.files
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                //     common = data.most;
+                //     console.log("data recieved", data);
+                //     document.getElementById("information").textContent = common;        
+                // })
+                // .catch(error => console.error("Error getting data: ", effor));
+            }
+        });
+
+        doneButton.addEventListener("click", () => {
+            mediarec.stop();
+            document.getElementById("information").textContent = "Most Common Word Spoken: ";
+        });
+    </script>
 </body>
 </html>
