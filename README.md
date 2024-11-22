@@ -1,6 +1,6 @@
 ![Lint-free](https://github.com/nyu-software-engineering/containerized-app-exercise/actions/workflows/lint.yml/badge.svg) ![Machine-Learning-Client Tests](https://github.com/software-students-fall2024/4-containers-ballincat43/actions/workflows/machine.yaml/badge.svg) ![Web-App Tests](https://github.com/software-students-fall2024/4-containers-ballincat43/actions/workflows/web.yaml/badge.svg)
 
-# Ballin Speech Analyzer
+# NoFiller
 
 ## Description
 
@@ -23,7 +23,7 @@ To compile and run this project, clone this respository in a directory of your c
 git clone <repository url> 
 ```
 
-__Environment variables__: To connect the database to the rest of the project, a `.env` file will be provided privately to instructors. Add this file to the root directory of the respository. 
+__Environment variables__: To connect the database to the rest of the project, a `.env` file will be provided privately to instructors. Add this file to the root directory of the respository.  An example can be see in [example.txt](./example.txt)
 
 Navigate into the respository that you have just cloned, and run the following docker command to compile and run the program: 
 
@@ -37,7 +37,7 @@ https://127.0.0.1:5000
 ```
 
 ### Using the App
-The app will start off at the login page. You can choose to create your own account, in which you need to create a username and password, or you can sign in using this premade account: `username = bob123 | password = test`. Logging in will take you to the user home menu, from where you can use the app's features. To start, hit the start record button, then the stop record button. Note that it may take some time to process your speech. To ensure a smooth experience, try to use Google Chrome as your web browser.
+The app will start off at the login page. You can choose to create your own account, in which you need to create a username and password, or you can sign in using this premade account: `username = bob123 | password = test`. Logging in will take you to the user home menu, from where you can use the app's features. To start, hit the start record button, then the stop record button. Note that it may take some time to process your speech. To ensure a smooth experience, try to use Google Chrome as your web browser. While you do not need any starter data for the database, if you would like to reset your recorded data, simply click the clear button after going to the stats page.
 
 ### Closing the App
 To close the app, run the following docker command in your terminal:
