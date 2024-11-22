@@ -2,6 +2,8 @@ name: Machine Learning Client Tests
 on:
   pull_request:
     types: [opened, closed]
+  push:
+    branches: [main]
 jobs:
   build_test:
     runs-on: ubuntu-latest
