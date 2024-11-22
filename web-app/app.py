@@ -40,6 +40,7 @@ def user_loader(username):
 def login():
     """handles login functionality"""
     error = None
+    print("HELLO")
 
     if request.method == "POST":
         username = request.form.get("username")
@@ -122,20 +123,33 @@ def stats(username):
     return render_template("stats.html", username=username)
 
 
-@app.route("/listen", methods=["POST"])
-def listen():
+@app.route("/listen/<username>", methods=["POST"])
+def listen(username):
     """
     Connect to the machine learning client to process audio.
     """
     print("WENT IN TO FUNCTION")
+    if "afile" not in request.files:
+        return render_template("user_home.html", username=username, most = str(request.files.keys()), percent = "100%")
     audio = request.files["afile"]
-
     audio.save("audiofiles/temp.wav")
-    file = open("audiofiles/temp.wav", 'r')
 
-    response = requests.post('http://machine:1000/listen', files={"afile": file})
-    response.raise_for_status()
-    return response.json()
+    # audio.save("audiofiles/temp.wav")
+    # file = open("audiofiles/temp.wav", 'r')
+    most = ""
+    percent = ""
+    response = requests.post('http://machine:1000/transcribe')
+    if(response.status_code == 200):
+        try:
+            tfile= open("audiofiles/temp.csv", "r")
+            text = tfile.read().split(",")
+            most = text[0]
+            percent = text[1]
+        except:
+            print("ERROR")
+            most = "error"
+        
+    return render_template("user_home.html", username=username, most = most, percent = percent)
 
 
 if __name__ == "__main__":

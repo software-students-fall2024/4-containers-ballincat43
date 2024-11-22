@@ -11,6 +11,7 @@ flask = "*"
 pipenv = "*"
 pymongo = "*"
 SpeechRecognition = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
