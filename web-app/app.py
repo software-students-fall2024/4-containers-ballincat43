@@ -128,7 +128,7 @@ def stats(username):
             print("Connected to MongoDB successfully.")
         except errors.ConnectionFailure as e:
             print(f"Failed to connect to MongoDB: {e}")
-            redirect(url_for('show_home', username=username))
+            redirect(url_for("show_home", username=username))
 
         db = client["transcription_db"]
         text_coll = db["Stats"]
