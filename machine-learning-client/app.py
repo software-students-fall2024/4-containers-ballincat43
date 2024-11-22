@@ -22,17 +22,17 @@ def transcribe():
     #  text = "apple apple apple apple"
 
     common, freq = vocab_diversity(text)
-    percent = f'{(freq*100)}%'
-    result = f'{common},{percent}'
+    percent = f"{(freq*100)}%"
+    result = f"{common},{percent}"
 
     spt.store(text, common, freq)
 
-    with open("audiofiles/temp.csv", 'w', encoding="utf-8") as tfile:
+    with open("audiofiles/temp.csv", "w", encoding="utf-8") as tfile:
         tfile.write(result)
         tfile.write("\n")
         tfile.close()
 
-    return ('', 200)
+    return ("", 200)
 
 
 if __name__ == "__main__":
