@@ -24,6 +24,14 @@ users = {
     "adminTester": {"password": "testingtesting"},
 }
 
+mongo_connect = True
+try:
+    client = MongoClient("mongodb://db:27017/")
+    print("Connected to MongoDB successfully.")
+except errors.ConnectionFailure as e:
+    print(f"Failed to connect to MongoDB: {e}")
+    mongo_connect = False
+
 
 class User(flask_login.UserMixin):  # pylint: disable = too-few-public-methods
     """user class for flask-login"""
@@ -127,11 +135,7 @@ def stats(username):
 
     common = ""
     if username != "adminTester":
-        try:
-            client = MongoClient("mongodb://db:27017/")
-            print("Connected to MongoDB successfully.")
-        except errors.ConnectionFailure as e:
-            print(f"Failed to connect to MongoDB: {e}")
+        if not mongo_connect:
             redirect(url_for("show_home", username=username))
 
         db = client["transcription_db"]
@@ -203,10 +207,7 @@ def results(username):
 def clear(username):
     """Clears information from the database"""
     if username != "adminTester":
-        try:
-            client = MongoClient("mongodb://db:27017/")
-        except errors.ConnectionFailure as e:
-            print(f"Failed to connect to MongoDB: {e}")
+        if not mongo_connect:
             redirect(url_for("show_home", username=username))  # send back home
         database = client["transcription_db"]
         coll = database["Stats"]
