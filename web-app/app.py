@@ -3,7 +3,7 @@ Module: a flask application that acts as the interface for user login,
 audio recording, and viewing statistics
 """
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 import flask_login
 from flask_login import login_user, login_required, logout_user
 from pymongo import MongoClient, errors
@@ -23,6 +23,14 @@ users = {
     "jen987": {"password": "foobar"},
     "adminTester": {"password": "testingtesting"},
 }
+
+MONGO_CONNECT = True
+try:
+    client = MongoClient("mongodb://db:27017/")
+    print("Connected to MongoDB successfully.")
+except errors.ConnectionFailure as e:
+    print(f"Failed to connect to MongoDB: {e}")
+    MONGO_CONNECT = False
 
 
 class User(flask_login.UserMixin):  # pylint: disable = too-few-public-methods
@@ -127,11 +135,7 @@ def stats(username):
 
     common = ""
     if username != "adminTester":
-        try:
-            client = MongoClient("mongodb://db:27017/")
-            print("Connected to MongoDB successfully.")
-        except errors.ConnectionFailure as e:
-            print(f"Failed to connect to MongoDB: {e}")
+        if not MONGO_CONNECT:
             redirect(url_for("show_home", username=username))
 
         db = client["transcription_db"]
@@ -144,48 +148,72 @@ def stats(username):
     return render_template("stats.html", username=username, word=common)
 
 
-@app.route("/listen/<username>", methods=["POST"])
+@app.route("/listen/<username>", methods=["GET", "POST"])
 def listen(username):
     """
     Connect to the machine learning client to process audio.
     """
-    print("WENT IN TO FUNCTION")
-    if "afile" not in request.files:
-        return render_template(
-            "user_home.html",
-            username=username,
-            most=str(request.files.keys()),
-            percent="100%",
-        )
-    audio = request.files["afile"]
-    audio.save("audiofiles/temp.wav")
 
-    # audio.save("audiofiles/temp.wav")
-    # file = open("audiofiles/temp.wav", 'r')
-    most = ""
-    percent = ""
-    response = requests.post("http://machine:1000/transcribe", timeout=100000)
-    # need time to process the request
-    if response.status_code == 200:
-        try:
-            with open("audiofiles/temp.csv", "r", encoding="utf-8") as tfile:
-                text = tfile.read().split(",")
-                most = text[0]
-                percent = text[1]
-        except IOError as e:
-            print("ERROR: ", e)
-            most = "error"
+    if request.method == "POST":
+        print("WENT IN TO FUNCTION")
+        if "afile" not in request.files:
+            return render_template(
+                "user_home.html",
+                username=username,
+                most=str(request.files.keys()),
+                percent="100%",
+            )
+        audio = request.files["afile"]
+        audio.save("audiofiles/temp.wav")
 
-    return redirect(url_for("results", username=username, most=most, percent=percent))
+        # audio.save("audiofiles/temp.wav")
+        # file = open("audiofiles/temp.wav", 'r')
+        most = ""
+        percent = ""
+        response = requests.post("http://machine:1000/transcribe", timeout=100000)
+        # need time to process the request
+        if response.status_code == 200:
+            try:
+                with open("audiofiles/temp.csv", "r", encoding="ascii") as tfile:
+                    text = tfile.readline().split(",")
+                    most = text[0]
+                    percent = text[1]
+                    tfile.close()
+            except IOError as e:
+                print("ERROR: ", e)
+                most = "error"
 
+        return jsonify({"most": most, "percent": percent})
 
-@app.route("/<username>/<most>:<percent>", methods=["GET", "POST"])
-@login_required
-def results(username, most, percent):
-    """Post results"""
     return render_template(
-        "user_home.html", username=username, most=most, percent=percent
+        "results.html", username=username, most=most, percent=percent
     )
+
+
+@app.route("/<username>/results", methods=["GET", "POST"])
+@login_required
+def results(username):
+    """Post results"""
+
+    most = request.form.get("most")
+    percent = request.form.get("percent")
+    return render_template(
+        "results.html", username=username, most=most, percent=percent
+    )
+
+
+@app.route("/<username>/clear", methods=["POST"])
+@login_required
+def clear(username):
+    """Clears information from the database"""
+    if username != "adminTester":
+        if not MONGO_CONNECT:
+            redirect(url_for("show_home", username=username))  # send back home
+        database = client["transcription_db"]
+        coll = database["Stats"]
+        coll.delete_many({"word": {"$ne": ""}})
+
+    return redirect(url_for("show_home", username=username))
 
 
 if __name__ == "__main__":

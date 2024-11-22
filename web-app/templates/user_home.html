@@ -13,21 +13,18 @@
         </form>
     </header>
 
-    <div class="button-container">
-        <button class="action-btn", id="srecord">Start Recording</button>
-        <button class = "action-btn", id = "doneButton">Stop Recording</button>
-        <form id = "audioInput" action = "{{url_for('listen', username=username)}}" method = "POST">
-            <input type="file" id="afile" name="afile" hidden />
-            <button id = "sub" type = "submit">Submit</button>
+    <div class="button-container" style="align-items: center;">
+        <h1 id = "headertext" style="align-items: center;">Welcome!</h1>
+        <button class="action-btn", id="srecord" style="align-items: center;">Start Recording</button>
+        <button class = "action-btn", id = "doneButton" style="align-items: center;">Stop Recording</button>
+        <form id = "audioInput" action = "{{url_for('results', username=username)}}" method = "POST">
+            <input type="text" id="most" name="most" hidden />
+            <input type="text" id="percent" name="percent" hidden />
+            <input type="file" id="afile" name="afile" hidden/>
+            <button id = "sub" type = "submit" hidden>Submit</button>
         </form>
-        {% if most is not none %}
-            <div id="information">Most Common Word: {{most}}</div>
-            </br>
-            <div>Diversity: {{percent}}</div>
-        {% endif %}
-        <button class="action-btn">Upload Audio</button>
         <form action="{{ url_for('stats', username=username) }}" method="GET" style="margin: 0;">
-            <button type="submit" class="action-btn">My Stats</button>
+            <button type="submit" class="action-btn" style="align-items: center;">My Stats</button>
         </form>
     </div>
 
@@ -40,6 +37,7 @@
         const aform = document.getElementById("audioInput");
 
         recording.addEventListener("click", async () => {
+            document.getElementById("headertext").textContent = "Recording";
             const stream = await navigator.mediaDevices.getUserMedia({audio: true});
             mediarec = new MediaRecorder(stream);
             mediarec.ondataavailable = e => audio.push(e.data);
@@ -56,7 +54,18 @@
                     method: 'POST',
                     body: formd
                 })
-                audio = [];
+                .then(response => response.json())
+                .then(data => {
+                    const most = data.most;
+                    const percent = data.percent;
+                    document.getElementById("most").setAttribute('value', most);
+                    document.getElementById("percent").setAttribute('value', percent);
+                    // fetch('/{{username}}/results', {
+                    //     method: 'POST',
+                    //     body: {"most": most, "percent": percent}
+                    // })
+                    aform.submit();
+                })
                 // console.log("Sanity check");
                 
                 // fetch('/listen', {
@@ -75,7 +84,7 @@
 
         doneButton.addEventListener("click", () => {
             mediarec.stop();
-            document.getElementById("information").textContent = "Most Common Word Spoken: ";
+            document.getElementById("headertext").textContent = "Please Wait";
         });
     </script>
 </body>

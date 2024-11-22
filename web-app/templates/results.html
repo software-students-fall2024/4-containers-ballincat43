@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Stats</title>
+    <title>Results</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
-        <h2>My Stats</h2>
+        <h2>Results</h2>
         <a href="{{ url_for('show_home', username=username) }}">
             <button class="menu-btn">Back to Home</button>
         </a>
     </header>
     <div>
-        <h1>The word that you have spoken the most is {{word}}.</h1>
+        <h1 style="align-content: center;">The most common word you spoke was "{{most}}".</h1>
+        <h1 style="align-content: center;">Your vocabulary diversity (unique words to total words) is {{percent}}.</h1>
     </div>
-    <br>
-    <form action="{{ url_for('clear', username=username) }}" method="POST" style="margin: 0;">
-        <button type="submit" class="action-btn" style="align-items: center;">Clear Data</button>
-    </form>
 </body>
 </html>
