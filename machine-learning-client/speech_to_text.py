@@ -1,7 +1,7 @@
-import os
+"""This file contains the api that transcribes the collected audio"""
+import os, sys
 import assemblyai as aai
-from functions import parse_text, most_common_dict, vocab_diversity
-from pymongo import MongoClient
+from pymongo import MongoClient, errors
 from dotenv import load_dotenv
 
 #load environment variables from .env file
@@ -11,7 +11,7 @@ load_dotenv()
 ASSEMBLYAI_API_KEY = os.getenv("ASSEMBLYAI_API_KEY")
 if not ASSEMBLYAI_API_KEY:
     print("Error: ASSEMBLYAI_API_KEY not found in environment variables.")
-    exit(1)
+    sys.exit(1)
 
 #set AssemblyAI API Key
 aai.settings.api_key = ASSEMBLYAI_API_KEY
@@ -26,29 +26,29 @@ def get_transcription() -> str:
     #transcription configuration
     config = aai.TranscriptionConfig()
 
-    #transcribe 
+    #transcribe
     print("Starting transcription...")
     transcript = transcriber.transcribe(audio_file, config)
     print("Transcription completed.")
 
     if transcript.status == aai.TranscriptStatus.error:
         print(f"Transcription failed: {transcript.error}")
-        exit(1)
+        sys.exit(1)
 
-    
-    
+
+
     return transcript.text
 
 #MONGODB
 
-def store(data: str, common: str, percent: float, words: dict = None):
+def store(data: str, common: str, percent: float):
     """Stores the transcribed text in a mongo database"""
 
     #initialize MongoDB client to connect to local MongoDB instance
     try:
         client = MongoClient('mongodb://localhost:27017/')
         print("Connected to MongoDB successfully.")
-    except Exception as e:
+    except errors.ConnectionFailure as e:
         print(f"Failed to connect to MongoDB: {e}")
 
     db = client['transcription_db']
@@ -57,21 +57,15 @@ def store(data: str, common: str, percent: float, words: dict = None):
     collection_text = db['SpeechText']
 
     # insert word counts into 'SpeechStats' collection
-    try:
-        
-        collection_stats.insert_one({
-            "common": common,
-            "freq": percent
-        })
-    except Exception as e:
-        print(f"An error occurred while inserting word counts into MongoDB: {e}")
+
+    collection_stats.insert_one({
+        "common": common,
+        "freq": percent
+    })
 
     # insert transcript into 'SpeechText' collection
-    try:
-        collection_text.insert_one({
-            "textContent": data
-        })
-    except Exception as e:
-        print(f"An error occurred while inserting transcript into MongoDB: {e}")
+    collection_text.insert_one({
+        "textContent": data
+    })
 
     client.close()
