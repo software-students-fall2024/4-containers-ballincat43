@@ -4,6 +4,7 @@ analysis on data recieved.
 """
 
 import re
+from pymongo import MongoClient, errors
 
 # starting some functions:
 
@@ -45,6 +46,16 @@ def most_common_dict(word_freq: dict, every: bool = False):
     is returned, unless the 'every' flag is set to true, in which case
     all of them are returned as a list.
     """
+
+    try:
+        client = MongoClient("mongodb://db:27017/")
+        print("Connected to MongoDB successfully.")
+    except errors.ConnectionFailure as e:
+        print(f"Failed to connect to MongoDB: {e}")
+
+    db = client["transcription_db"]
+    coll = db["Stats"]
+
     m = 0
     if every:
         ms = []
@@ -52,12 +63,18 @@ def most_common_dict(word_freq: dict, every: bool = False):
         ms = ""  # max string
     for k in sorted(word_freq.keys()):
         v = word_freq.get(k)
+        if coll.count_documents({"word": k}) != 0:
+            oldCount: int = coll.find_one({"word": k})["count"]
+            coll.replace_one({"word": k}, {"word": k, "count": int(oldCount + v)})
+        else:
+            coll.insert_one({"word": k, "count": int(v)})
         if v > m:
             m = v
             if every:
                 ms.append(k)
             else:
                 ms = k
+    client.close()
     return ms
 
 

@@ -48,7 +48,7 @@ def store(data: str, common: str, percent: float):
 
     # initialize MongoDB client to connect to local MongoDB instance
     try:
-        client = MongoClient("mongodb://localhost:27017/")
+        client = MongoClient("mongodb://db:27017/")
         print("Connected to MongoDB successfully.")
     except errors.ConnectionFailure as e:
         print(f"Failed to connect to MongoDB: {e}")

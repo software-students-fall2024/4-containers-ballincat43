@@ -6,6 +6,7 @@ audio recording, and viewing statistics
 from flask import Flask, render_template, request, redirect, url_for
 import flask_login
 from flask_login import login_user, login_required, logout_user
+from pymongo import MongoClient, errors
 import requests
 
 # instantiate flask app, create key
@@ -120,7 +121,22 @@ def show_home(username):
 def stats(username):
     """show the user's statistics page"""
 
-    return render_template("stats.html", username=username)
+    try:
+        client = MongoClient("mongodb://db:27017/")
+        print("Connected to MongoDB successfully.")
+    except errors.ConnectionFailure as e:
+        print(f"Failed to connect to MongoDB: {e}")
+        redirect(url_for('show_home', username=username))
+
+    db = client["transcription_db"]
+    textColl = db["Stats"]
+    allT = textColl.find().sort("count", -1)
+    common = ""
+    for t in allT:
+        common = t["word"]
+        break
+
+    return render_template("stats.html", username=username, word=common)
 
 
 @app.route("/listen/<username>", methods=["POST"])
