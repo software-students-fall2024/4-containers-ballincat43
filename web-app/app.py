@@ -133,8 +133,8 @@ def listen(username):
         return render_template(
             "user_home.html",
             username=username,
-            most = str(request.files.keys()),
-            percent = "100%",
+            most=str(request.files.keys()),
+            percent="100%",
         )
     audio = request.files["afile"]
     audio.save("audiofiles/temp.wav")
@@ -155,7 +155,8 @@ def listen(username):
             print("ERROR: ", e)
             most = "error"
 
-    return redirect(url_for("results", username=username, most = most, percent = percent))
+    return redirect(url_for("results", username=username, most=most, percent=percent))
+
 
 @app.route('/<username>/<most>:<percent>', methods=["GET", "POST"])
 @login_required
