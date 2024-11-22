@@ -18,7 +18,11 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 # simulated database of users, need to implement
-users = {"bob123": {"password": "test"}, "jen987": {"password": "foobar"}, "adminTester": {"password": "testingtesting"}}
+users = {
+    "bob123": {"password": "test"},
+    "jen987": {"password": "foobar"},
+    "adminTester": {"password": "testingtesting"},
+}
 
 
 class User(flask_login.UserMixin):  # pylint: disable = too-few-public-methods
