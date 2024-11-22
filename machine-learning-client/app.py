@@ -27,9 +27,8 @@ def transcribe():
 
     spt.store(text, common, freq)
 
-    with open("audiofiles/temp.csv", "w", encoding="utf-8") as tfile:
+    with open("audiofiles/temp.csv", "w", encoding="ascii") as tfile:
         tfile.write(result)
-        tfile.write("\n")
         tfile.close()
 
     return ("", 200)
