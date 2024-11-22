@@ -20,49 +20,97 @@ def test_login():
     """test that login works"""
     with app.test_client() as client:
         assert client.get("/login").status_code == 200
-        assert client.post("/login", data={
-            "username": "bob123",
-            "password": "test",
-        }).status_code == 302  # if user exits, should redirect to homepage
-        assert client.post("/login", data={
-            "username": "penguin",
-            "password": "antarctica",
-        }).status_code == 200
+        assert (
+            client.post(
+                "/login",
+                data={
+                    "username": "bob123",
+                    "password": "test",
+                },
+            ).status_code
+            == 302
+        )  # if user exits, should redirect to homepage
+        assert (
+            client.post(
+                "/login",
+                data={
+                    "username": "penguin",
+                    "password": "antarctica",
+                },
+            ).status_code
+            == 200
+        )
         # if user doesn't exist, will render template with success instead of 302
-        assert client.post("/login", data={
-            "username": "bob123",
-            "password": None,
-        }).status_code == 200
-        assert client.post("/login", data={
-            "username": None,
-            "password": "test",
-        }).status_code == 200
+        assert (
+            client.post(
+                "/login",
+                data={
+                    "username": "bob123",
+                    "password": None,
+                },
+            ).status_code
+            == 200
+        )
+        assert (
+            client.post(
+                "/login",
+                data={
+                    "username": None,
+                    "password": "test",
+                },
+            ).status_code
+            == 200
+        )
 
 
 def test_create_account():
     """testing create account"""
     with app.test_client() as client:
         assert client.get("/create_account").status_code == 200
-        assert client.post("/create_account", data={
-            "username": "nyc",
-            "password": "ny",
-            "password_confirm": "ny",
-        }).status_code == 302  # if successful should redirect to login
-        assert client.post("/create_account", data={
-            "username": "nyc",
-            "password": "ny",
-            "password_confirm": "pa",
-        }).status_code == 200  # will render template instead
-        assert client.post("/create_account", data={
-            "username": "bob123",
-            "password": "ny",
-            "password_confirm": "ny",
-        }).status_code == 200  # will render template instead
-        assert client.post("/create_account", data={
-            "username": None,
-            "password": None,
-            "password_confirm": "ny",
-        }).status_code == 200  # will render template instead
+        assert (
+            client.post(
+                "/create_account",
+                data={
+                    "username": "nyc",
+                    "password": "ny",
+                    "password_confirm": "ny",
+                },
+            ).status_code
+            == 302
+        )  # if successful should redirect to login
+        assert (
+            client.post(
+                "/create_account",
+                data={
+                    "username": "nyc",
+                    "password": "ny",
+                    "password_confirm": "pa",
+                },
+            ).status_code
+            == 200
+        )  # will render template instead
+        assert (
+            client.post(
+                "/create_account",
+                data={
+                    "username": "bob123",
+                    "password": "ny",
+                    "password_confirm": "ny",
+                },
+            ).status_code
+            == 200
+        )  # will render template instead
+        assert (
+            client.post(
+                "/create_account",
+                data={
+                    "username": None,
+                    "password": None,
+                    "password_confirm": "ny",
+                },
+            ).status_code
+            == 200
+        )  # will render template instead
 
 def test_logout():
     """testing logout"""
@@ -92,10 +140,17 @@ def test_results():
     """testing results"""
     user = User("adminTester")
     with app.test_client(user=user) as client:
-        assert client.post("/adminTester/results", data={
-            "most": "apple",
-            "percent": "100%",
-        }).status_code == 200  # will render template instead
+        assert (
+            client.post(
+                "/adminTester/results",
+                data={
+                    "most": "apple",
+                    "percent": "100%",
+                },
+            ).status_code
+            == 200 
+         ) # will render template instead
+
 
 def test_listen():
     """testing listen"""
