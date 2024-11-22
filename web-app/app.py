@@ -182,10 +182,9 @@ def listen(username):
         return jsonify(
             {"most": most, "percent": percent}
         )
-    else:
-        return render_template(
-            "results.html", username=username, most=most, percent=percent
-        )
+    return render_template(
+        "results.html", username=username, most=most, percent=percent
+    )
 
 
 @app.route("/<username>/results", methods=["GET", "POST"])
@@ -203,6 +202,7 @@ def results(username):
 @app.route("/<username>/clear", methods=["POST"])
 @login_required
 def clear(username):
+    """Clears information from the database"""
     if username != "adminTester":
         try:
             client = MongoClient("mongodb://db:27017/")
