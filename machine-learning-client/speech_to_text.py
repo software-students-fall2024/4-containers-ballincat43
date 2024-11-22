@@ -1,5 +1,6 @@
 """This file contains the api that transcribes the collected audio"""
-import os, sys
+import os
+import sys
 import assemblyai as aai
 from pymongo import MongoClient, errors
 from dotenv import load_dotenv

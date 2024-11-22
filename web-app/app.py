@@ -130,8 +130,12 @@ def listen(username):
     """
     print("WENT IN TO FUNCTION")
     if "afile" not in request.files:
-        return render_template("user_home.html", username=username,\
-            most = str(request.files.keys()), percent = "100%")
+        return render_template(
+            "user_home.html",
+            username=username,
+            most = str(request.files.keys()),
+            percent = "100%",
+        )
     audio = request.files["afile"]
     audio.save("audiofiles/temp.wav")
 
@@ -139,7 +143,7 @@ def listen(username):
     # file = open("audiofiles/temp.wav", 'r')
     most = ""
     percent = ""
-    response = requests.post('http://machine:1000/transcribe', timeout=100000)
+    response = requests.post("http://machine:1000/transcribe", timeout=100000)
     # need time to process the request
     if response.status_code == 200:
         try:
@@ -151,13 +155,15 @@ def listen(username):
             print("ERROR: ", e)
             most = "error"
 
-    return redirect(url_for('results', username=username, most = most, percent = percent))
+    return redirect(url_for("results", username=username, most = most, percent = percent))
 
 @app.route('/<username>/<most>:<percent>', methods=["GET", "POST"])
 @login_required
 def results(username, most, percent):
     """Post results"""
-    return render_template("user_home.html", username=username, most=most, percent=percent)
+    return render_template(
+        "user_home.html", username=username, most=most, percent=percent
+    )
 
 
 if __name__ == "__main__":
