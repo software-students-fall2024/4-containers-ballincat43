@@ -76,7 +76,7 @@ def most_common_dict(word_freq: dict, every: bool = False, test: bool = False):
                 ms = [k]
             else:
                 ms = k
-        elif v==m and every:
+        elif v == m and every:
             ms.append(k)
 
     if not test:
