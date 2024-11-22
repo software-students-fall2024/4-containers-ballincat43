@@ -179,9 +179,8 @@ def listen(username):
                 print("ERROR: ", e)
                 most = "error"
 
-        return jsonify(
-            {"most": most, "percent": percent}
-        )
+        return jsonify({"most": most, "percent": percent})
+    
     return render_template(
         "results.html", username=username, most=most, percent=percent
     )
@@ -211,11 +210,7 @@ def clear(username):
             redirect(url_for("show_home", username=username))  # send back home
         database = client["transcription_db"]
         coll = database["Stats"]
-        coll.delete_many({
-            "word": {
-                "$ne": ""
-            }
-        })
+        coll.delete_many({"word": {"$ne": ""}})
 
     return redirect(url_for("show_home", username=username))
 
