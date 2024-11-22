@@ -60,25 +60,8 @@
                     const percent = data.percent;
                     document.getElementById("most").setAttribute('value', most);
                     document.getElementById("percent").setAttribute('value', percent);
-                    // fetch('/{{username}}/results', {
-                    //     method: 'POST',
-                    //     body: {"most": most, "percent": percent}
-                    // })
                     aform.submit();
                 })
-                // console.log("Sanity check");
-                
-                // fetch('/listen', {
-                //     method: 'POST',
-                //     body: aform.files
-                // })
-                // .then(response => response.json())
-                // .then(data => {
-                //     common = data.most;
-                //     console.log("data recieved", data);
-                //     document.getElementById("information").textContent = common;        
-                // })
-                // .catch(error => console.error("Error getting data: ", effor));
             }
         });
 
