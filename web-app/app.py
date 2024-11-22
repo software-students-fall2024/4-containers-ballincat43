@@ -148,7 +148,7 @@ def listen(username):
                 most = text[0]
                 percent = text[1]
         except IOError as e:
-            print("ERROR")
+            print("ERROR: ", e)
             most = "error"
 
     return redirect(url_for('results', username=username, most = most, percent = percent))
