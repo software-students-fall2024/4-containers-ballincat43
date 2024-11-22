@@ -118,11 +118,11 @@ def show_home(username):
 
 @app.route("/<username>/stats")
 @login_required
-def stats(username, test=False):
+def stats(username):
     """show the user's statistics page"""
 
     common = ""
-    if not test:
+    if not app.config["Testing"]:
         try:
             client = MongoClient("mongodb://db:27017/")
             print("Connected to MongoDB successfully.")
@@ -131,9 +131,9 @@ def stats(username, test=False):
             redirect(url_for('show_home', username=username))
 
         db = client["transcription_db"]
-        textColl = db["Stats"]
-        allT = textColl.find().sort("count", -1)
-        for t in allT:
+        text_coll = db["Stats"]
+        all_t = text_coll.find().sort("count", -1)
+        for t in all_t:
             common = t["word"]
             break
 

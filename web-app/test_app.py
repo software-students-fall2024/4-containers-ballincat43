@@ -8,6 +8,7 @@ from app import app, User
 
 app.secret_key = "tripledoubleholymoly"
 app.test_client_class = FlaskLoginClient
+app.config["Testing"] = True
 
 
 def test_index():
@@ -46,4 +47,4 @@ def test_stats():
     """testing stats"""
     user = User("bob123")
     with app.test_client(user=user) as client:
-        assert client.get("/bob123/stats").status_code == 200
+        assert client.get('/bob123/stats').status_code == 200
