@@ -47,7 +47,7 @@ def most_common_dict(word_freq: dict, every: bool = False, test: bool = False):
     all of them are returned as a list.
     """
 
-    coll = None # for linting
+    coll = None  # for linting
     if not test:
         try:
             client = MongoClient("mongodb://db:27017/")
