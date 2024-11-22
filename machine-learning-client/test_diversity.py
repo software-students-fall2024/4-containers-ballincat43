@@ -11,7 +11,7 @@ def test_unique():
     a frequency of 1 and the first word.
     """
     s = "apple blue car drive eagle flame green house"
-    m, f = vocab_diversity(s)
+    m, f = vocab_diversity(s, True)
     assert f == 1
     assert m == "apple"
 
@@ -22,7 +22,7 @@ def test_repeat():
     a frequency of 1/total and the correct common word.
     """
     s = "apple apple apple apple apple"
-    m, f = vocab_diversity(s)
+    m, f = vocab_diversity(s, True)
     assert f == 0.2
     assert m == "apple"
 
@@ -32,7 +32,7 @@ def test_none():
     Tests the functions behavior with an empty string.
     """
     s = ""
-    m, f = vocab_diversity(s)
+    m, f = vocab_diversity(s, True)
     assert f == 1
     assert m == ""
 
@@ -42,6 +42,6 @@ def test_reg():
     Tests the function on a more "normal" input.
     """
     s = "That coffee is so hot that it burned the paper"
-    m, f = vocab_diversity(s)
+    m, f = vocab_diversity(s, True)
     assert f == 0.9
     assert m == "that"
