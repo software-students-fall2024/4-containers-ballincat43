@@ -118,23 +118,24 @@ def show_home(username):
 
 @app.route("/<username>/stats")
 @login_required
-def stats(username):
+def stats(username, test=False):
     """show the user's statistics page"""
 
-    try:
-        client = MongoClient("mongodb://db:27017/")
-        print("Connected to MongoDB successfully.")
-    except errors.ConnectionFailure as e:
-        print(f"Failed to connect to MongoDB: {e}")
-        redirect(url_for('show_home', username=username))
-
-    db = client["transcription_db"]
-    textColl = db["Stats"]
-    allT = textColl.find().sort("count", -1)
     common = ""
-    for t in allT:
-        common = t["word"]
-        break
+    if not test:
+        try:
+            client = MongoClient("mongodb://db:27017/")
+            print("Connected to MongoDB successfully.")
+        except errors.ConnectionFailure as e:
+            print(f"Failed to connect to MongoDB: {e}")
+            redirect(url_for('show_home', username=username))
+
+        db = client["transcription_db"]
+        textColl = db["Stats"]
+        allT = textColl.find().sort("count", -1)
+        for t in allT:
+            common = t["word"]
+            break
 
     return render_template("stats.html", username=username, word=common)
 
