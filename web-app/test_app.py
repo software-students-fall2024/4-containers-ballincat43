@@ -150,7 +150,7 @@ def test_results():
                 },
             ).status_code
             == 200
-         )  # will render template instead
+        )  # will render template instead
 
 
 def test_listen():
