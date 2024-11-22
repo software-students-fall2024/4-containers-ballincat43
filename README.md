@@ -37,7 +37,7 @@ https://127.0.0.1:5000
 ```
 
 ### Using the App
-The app will start off at the login page. You can choose to create your own account, in which you need to create a username and password, or you can sign in using this premade account: `username = bob123 | password = test`. Logging in will take you to the user home menu, from where you can use the app's features. 
+The app will start off at the login page. You can choose to create your own account, in which you need to create a username and password, or you can sign in using this premade account: `username = bob123 | password = test`. Logging in will take you to the user home menu, from where you can use the app's features. To start, hit the start record button, then the stop record button. Note that it may take some time to process your speech. To ensure a smooth experience, try to use Google Chrome as your web browser.
 
 ### Closing the App
 To close the app, run the following docker command in your terminal:
