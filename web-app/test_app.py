@@ -148,7 +148,7 @@ def test_results():
                     "percent": "100%",
                 },
             ).status_code
-            == 200 
+            == 200
          ) # will render template instead
 
 
