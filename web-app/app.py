@@ -18,7 +18,7 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 # simulated database of users, need to implement
-users = {"bob123": {"password": "test"}, "jen987": {"password": "foobar"}}
+users = {"bob123": {"password": "test"}, "jen987": {"password": "foobar"}, "adminTester": {"password": "testingtesting"}}
 
 
 class User(flask_login.UserMixin):  # pylint: disable = too-few-public-methods
@@ -122,7 +122,7 @@ def stats(username):
     """show the user's statistics page"""
 
     common = ""
-    if not app.config["Testing"]:
+    if username != "adminTester":
         try:
             client = MongoClient("mongodb://db:27017/")
             print("Connected to MongoDB successfully.")
