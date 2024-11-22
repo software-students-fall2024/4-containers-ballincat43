@@ -17,6 +17,9 @@ services:
       - 1000:1000
     environment:
       - DB_HOST = ${MONGO_HOST}
+      - ASSEMBLYAI_API_KEY = ${ASSEMBLYAI_API_KEY}
+    env_file:
+      - .env
     depends_on:
       - db
     volumes:

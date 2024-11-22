@@ -6,7 +6,7 @@ the web-app container.
 from flask import Flask, request, jsonify
 from pymongo import MongoClient, server_api
 from functions import vocab_diversity
-import speech_recognition as sprc
+import speech_to_text as spt
 import os
 from dotenv import load_dotenv
 
@@ -29,16 +29,14 @@ def transcribe():
     file = open("audiofiles/temp.wav", 'rb')
     
     #text = transcribe(file)
-    rec = sprc.Recognizer()
-    with sprc.AudioFile(file) as source:
-        a = rec.record(sprc.AudioFile(file))
-    
-    text = rec.recognize_google_cloud(a)
+    text = spt.get_transcription()
     #text = "apple apple apple apple"
     
     common, freq = vocab_diversity(text)
     percent = f'{(freq*100)}%'
     result = f'{common},{percent}'
+
+    spt.store(text, common, freq)
 
     tfile = open("audiofiles/temp.csv", "w")
     tfile.write(result)

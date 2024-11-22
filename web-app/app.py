@@ -149,7 +149,13 @@ def listen(username):
             print("ERROR")
             most = "error"
         
-    return render_template("user_home.html", username=username, most = most, percent = percent)
+    return redirect(url_for('results', username=username, most = most, percent = percent))
+
+@app.route('/<username>/<most>:<percent>', methods=["GET", "POST"])
+@login_required
+def results(username, most, percent):
+    """Post results"""
+    return render_template("user_home.html", username=username, most=most, percent=percent)
 
 
 if __name__ == "__main__":
